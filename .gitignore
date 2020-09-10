@@ -1,0 +1,26 @@
+
+## Node
+.node_repl_history
+pids
+*.pid
+*.seed
+*.pid.lock
+
+## NPM
+node_modules
+jspm_packages
+.npm
+*.tgz
+
+## 生成文件
+_build
+
+## 临时文件
+*.tmp
+*.log
+*~
+._*
+
+## 比较文件
+*.patch
+*.diff
