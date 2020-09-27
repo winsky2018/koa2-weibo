@@ -17,40 +17,40 @@ onerror(app)
 
 // middlewares
 app.use(bodyparser({
-  enableTypes:['json', 'form', 'text']
+    enableTypes:['json', 'form', 'text']
 }))
 app.use(json())
 app.use(logger())
 app.use(require('koa-static')(__dirname + '/public'))
 
 app.use(views(__dirname + '/views', {
-  extension: 'ejs'
+    extension: 'ejs'
 }))
 
 //session 配置
 app.keys = ['AS&$3w4asdf43*#@']
 app.use(session({
-  key: 'weibo.sid',
-  prefix: 'weibo:sess:',
-  cookie: {
-    path: '/',
-    httpOnly: true,
-    maxAge: 24 * 60 * 60 * 1000
-  },
-  // ttl: 24 * 60 * 60 * 1000,
-  store: redisStorage({
-    host: '127.0.0.1',
-    port: '6379',
-    auth_pass: '123456'
-  })
+    key: 'weibo.sid',
+    prefix: 'weibo:sess:',
+    cookie: {
+        path: '/',
+        httpOnly: true,
+        maxAge: 24 * 60 * 60 * 1000
+    },
+    // ttl: 24 * 60 * 60 * 1000,
+    store: redisStorage({
+        host: '127.0.0.1',
+        port: '6379',
+        auth_pass: '123456'
+    })
 }))
 
 // logger
 app.use(async (ctx, next) => {
-  const start = new Date()
-  await next()
-  const ms = new Date() - start
-  console.log(`${ctx.method} ${ctx.url} - ${ms}ms`)
+    const start = new Date()
+    await next()
+    const ms = new Date() - start
+    console.log(`${ctx.method} ${ctx.url} - ${ms}ms`)
 })
 
 // routes
@@ -59,7 +59,7 @@ app.use(users.routes(), users.allowedMethods())
 
 // error-handling
 app.on('error', (err, ctx) => {
-  console.error('server error', err, ctx)
-});
+    console.error('server error', err, ctx)
+})
 
 module.exports = app
