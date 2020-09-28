@@ -11,9 +11,10 @@ const session = require('koa-generic-session')
 
 const index = require('./routes/index')
 const users = require('./routes/users')
+const errorViewRouter = require('./routes/view/error')
 
 // error handler
-onerror(app)
+onerror(app, { redirect: '/error' })
 
 // middlewares
 app.use(bodyparser({
@@ -56,6 +57,8 @@ app.use(async (ctx, next) => {
 // routes
 app.use(index.routes(), index.allowedMethods())
 app.use(users.routes(), users.allowedMethods())
+//404路由必须注册到最底部，因为匹配的路由*是通配符
+app.use(errorViewRouter.routes(), errorViewRouter.allowedMethods())
 
 // error-handling
 app.on('error', (err, ctx) => {

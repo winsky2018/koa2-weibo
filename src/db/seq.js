@@ -4,7 +4,7 @@
  */
 
 const { Sequelize } = require('sequelize')
-const mysqlConf = require('../conf/mysql.conf');
+const mysqlConf = require('../conf/mysql.conf')
 
 const sequelize = new Sequelize(mysqlConf)
 
