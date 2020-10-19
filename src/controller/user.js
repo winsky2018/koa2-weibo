@@ -5,9 +5,9 @@
 
 
 const { SuccessModel, ErrorModel } = require('../model/ResModel')
-const { getUserInfo } = require('../services/user')
+const { getUserInfo, createUser } = require('../services/user')
 const ErrorInfo = require('../model/ErrorInfo')
- 
+
 
 /**
  * 
@@ -22,10 +22,37 @@ async function isExist(userName) {
         return new SuccessModel(userInfo)
     }else {
         //用户不存在
-        return new ErrorModel(ErrorInfo['10003'])
+        return new ErrorModel(ErrorInfo['registerUserNameNotExistInfo'])
     }
 }
 
+/**
+ * 
+ * @param {string} userName 用户名
+ * @param {string} password 密码
+ * @param {number} gender 性别(1 男， 2 女， 3 保密)
+ */
+async function register({ userName, password, gender }) {
+    const userInfo = await getUserInfo(userName)
+    if(userInfo) {
+        //用户存在
+        return new ErrorModel(ErrorInfo['registerUserNameExistInfo'])
+    }
+
+    //注册Service
+    try {
+        await createUser({
+            userName, 
+            password, 
+            gender,
+        })
+        return new SuccessModel()
+    }catch (e) {
+        return new ErrorModel(ErrorInfo['registerFailInfo'])
+    }
+    
+}
 module.exports = {
-    isExist
+    isExist,
+    register    
 }

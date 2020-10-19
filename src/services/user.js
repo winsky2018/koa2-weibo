@@ -4,6 +4,7 @@
  */
 
 const { User } = require('../db/model')
+const doCrypto = require('../utils/cryp')
 
 /**
  * 
@@ -27,9 +28,28 @@ async function getUserInfo(userName, password) {
     if(!result) {
         return null
     }
+    console.log('getUserInfo dataValues', result.dataValues)
+    return result.dataValues
+}
+
+/**
+ * 创建用户
+ * @param {string} userName 用户名
+ * @param {string} password 密码
+ * @param {number} gender 性别
+ * @param {string} nickName 昵称
+ */
+async function createUser({userName, password, gender=3, nickName}) {
+    const result = await User.create({
+        userName, 
+        password: doCrypto(password), 
+        nickName: nickName || userName,
+        gender
+    })
     return result.dataValues
 }
 
 module.exports = {
-    getUserInfo
+    getUserInfo,
+    createUser
 }

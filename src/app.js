@@ -8,15 +8,13 @@ const logger = require('koa-logger')
 
 const redisStorage = require('koa-redis')
 const session = require('koa-generic-session')
+const { SESSION_SECRET_KEY } = require('./conf/secretKeys')
 
 //路由
 const index = require('./routes/index')
 const userViewRouter = require('./routes/view/user')
 const userAPIRouter = require('./routes/api/user')
 const errorViewRouter = require('./routes/view/error')
-
-//同步连接数据库
-require('./db/sync')
 
 // error handler
 onerror(app, { redirect: '/error' })
@@ -34,7 +32,7 @@ app.use(views(__dirname + '/views', {
 }))
 
 //session 配置
-app.keys = ['AS&$3w4asdf43*#@']
+app.keys = [SESSION_SECRET_KEY]
 app.use(session({
     key: 'weibo.sid',
     prefix: 'weibo:sess:',
