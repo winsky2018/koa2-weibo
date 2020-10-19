@@ -3,7 +3,7 @@
  * @author winSky
  */
 
-const { DataTypes } = require('sequelize');
+const { DataTypes } = require('sequelize')
 
 const seq = require('../seq')
 
