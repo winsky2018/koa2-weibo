@@ -9,9 +9,14 @@ const logger = require('koa-logger')
 const redisStorage = require('koa-redis')
 const session = require('koa-generic-session')
 
+//路由
 const index = require('./routes/index')
-const users = require('./routes/users')
+const userViewRouter = require('./routes/view/user')
+const userAPIRouter = require('./routes/api/user')
 const errorViewRouter = require('./routes/view/error')
+
+//同步连接数据库
+require('./db/sync')
 
 // error handler
 onerror(app, { redirect: '/error' })
@@ -56,7 +61,8 @@ app.use(async (ctx, next) => {
 
 // routes
 app.use(index.routes(), index.allowedMethods())
-app.use(users.routes(), users.allowedMethods())
+app.use(userViewRouter.routes(), userViewRouter.allowedMethods())
+app.use(userAPIRouter.routes(), userAPIRouter.allowedMethods())
 //404路由必须注册到最底部，因为匹配的路由*是通配符
 app.use(errorViewRouter.routes(), errorViewRouter.allowedMethods())
 

@@ -4,6 +4,8 @@
  */
 
 const sequelize = require('./seq')
+//引入所有的模型
+require('./model')
 
 //测试连接
 !(async () => {
@@ -19,5 +21,5 @@ const sequelize = require('./seq')
 //执行同步
 sequelize.sync({force: true}).then(() => {
     console.log('sync ok')
-    process.exit()
+    // process.exit()
 })
