@@ -52,7 +52,32 @@ async function register({ userName, password, gender }) {
     }
     
 }
+
+/**
+ * 登录
+ * @param {string} userName 用户名
+ * @param {string} password 密码
+ * @param {object} ctx koa2 中的ctx对象
+ */
+async function login({ userName, password, ctx }) {
+
+    //获取用户信息
+    const userinfo = await getUserInfo(userName, password)
+
+    if(!userinfo) {
+        //登录失败
+        return new ErrorModel(ErrorInfo['loginFailInfo'])
+    }
+
+    //登录成功
+    if(!ctx.session.userinfo) ctx.session.userinfo = userinfo
+
+    return new SuccessModel()    
+    
+}
+
 module.exports = {
     isExist,
-    register    
+    register,
+    login    
 }

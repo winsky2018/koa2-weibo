@@ -33,6 +33,7 @@ const User = seq.define('user', {
     picture: {
         type: DataTypes.STRING,
         comment: '头像，图片地址',
+        defaultValue: '/images/default_avatar.png'
     },
     city: {
         type: DataTypes.STRING,

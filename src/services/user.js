@@ -17,7 +17,7 @@ async function getUserInfo(userName, password) {
         userName
     }
     if(password) {
-        Object.assign(whereOpt, { password })
+        Object.assign(whereOpt, { password: doCrypto(password) })
     }
 
     //执行查询
